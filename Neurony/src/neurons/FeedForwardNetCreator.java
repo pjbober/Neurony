@@ -15,7 +15,7 @@ public class FeedForwardNetCreator {
 
 	private FeedForwardNetCreator(int nrOfHiddenLayers) {
 		this.nrOfHiddenLayers = nrOfHiddenLayers;
-		activationFunctions = new ActivationFunctions[nrOfHiddenLayers];
+		activationFunctions = new ActivationFunctions[nrOfHiddenLayers + 1];
 		nrOfNeuronsInHiddenLayers = new Integer[nrOfHiddenLayers];
 	}
 

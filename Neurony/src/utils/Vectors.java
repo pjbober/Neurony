@@ -6,7 +6,7 @@ public class Vectors {
 	public static double multiply(double[] vector1, double[] vector2)
 			throws BadVectorDimensionException {
 		if(vector1.length != vector2.length){
-			throw new BadVectorDimensionException();
+			throw new BadVectorDimensionException("Vectors have different sizes");
 		}
 		
 		double value = 0;

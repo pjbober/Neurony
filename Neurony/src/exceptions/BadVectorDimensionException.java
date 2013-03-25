@@ -2,6 +2,10 @@ package exceptions;
 
 public class BadVectorDimensionException extends Exception {
 
+	public BadVectorDimensionException(String string) {
+		super(string);
+	}
+
 	/**
 	 * 
 	 */

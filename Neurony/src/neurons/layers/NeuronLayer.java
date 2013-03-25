@@ -1,14 +1,11 @@
 package neurons.layers;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import neurons.Neuron;
-
-import exceptions.BadVectorDimensionException;
-
 import activationfunction.ActivationFunctions;
+import exceptions.BadVectorDimensionException;
 
 public class NeuronLayer {
 	private final int nrOfNeurons;
@@ -29,16 +26,15 @@ public class NeuronLayer {
 
 	public double[] getValues(double... input)
 			throws BadVectorDimensionException {
-		if (input.length != nrOfInputPerNeuron * nrOfNeurons) {
-			throw new BadVectorDimensionException();
+		if (input.length != nrOfInputPerNeuron) {
+			throw new BadVectorDimensionException("Expected "
+					+ nrOfInputPerNeuron + " values, but got " + input.length);
 		}
 
 		double[] values = new double[nrOfNeurons];
 
 		for (int i = 0; i < nrOfNeurons; i++) {
-			values[i] = neurons.get(i).getValue(
-					Arrays.copyOfRange(input, i * nrOfInputPerNeuron, (i + 1)
-							* nrOfInputPerNeuron));
+			values[i] = neurons.get(i).getValue(input);
 		}
 
 		return values;
@@ -46,5 +42,11 @@ public class NeuronLayer {
 
 	public int getNrOfNeurons() {
 		return nrOfNeurons;
+	}
+
+	@Override
+	public String toString() {
+		return "Layer of " + nrOfNeurons + " neurons, " + nrOfInputPerNeuron
+				+ " inputs per neuron";
 	}
 }
