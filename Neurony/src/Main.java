@@ -1,13 +1,11 @@
-import utils.ArraysUtil;
-import neurons.NeuronLayer;
 import activationfunction.ActivationFunctions;
+import neurons.FeedForwardNet;
+import neurons.FeedForwardNetCreator;
 import exceptions.BadVectorDimensionException;
 
 public class Main {
 	public static void main(String[] args) throws BadVectorDimensionException {
 
-		NeuronLayer layer = new NeuronLayer(4, 1, ActivationFunctions.Linear);
-
-		System.out.println(ArraysUtil.toString(layer.getValues(1, 1, 1, 1)));
+		FeedForwardNet net = FeedForwardNetCreator.builder(3).withSameNumberOfNeuronsInLayers(200).withSameActivationFunction(ActivationFunctions.Linear).withNrOfInputs(2).withNrOfOutputs(1).build();
 	}
 }
