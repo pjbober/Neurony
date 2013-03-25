@@ -3,6 +3,8 @@ package neurons.layers;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
+
 import neurons.Neuron;
 import activationfunction.ActivationFunctions;
 import exceptions.BadVectorDimensionException;
@@ -11,6 +13,7 @@ public class NeuronLayer {
 	private final int nrOfNeurons;
 	private final int nrOfInputPerNeuron;
 
+	@XStreamImplicit
 	List<Neuron> neurons;
 
 	public NeuronLayer(int nrOfNeurons, int nrOfInputPerNeuron,
