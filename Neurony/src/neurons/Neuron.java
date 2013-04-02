@@ -31,6 +31,49 @@ public class Neuron {
 		return function.getValue(Vectors.multiply(weights, input) + bias);
 	}
 	
+	double getDerivtiveValue(double... input) throws BadVectorDimensionException{
+		return function.getDerivativeValue(Vectors.multiply(weights, input) + bias);
+	}
+	
+	/**
+	 * Modifies weights by given deltas. Each weight is changed by adding
+	 * given value, e.g. when weights are [1, 2] and you invoke modifyWeightsBy(2,3)
+	 * you get weights modified to:
+	 * [1 + 2, 2 + 3] = [3, 5]
+	 * @param input Deltas
+	 */
+	void modifyWeightsBy(double... input){
+		for(int i=0;i<weights.length;i++){
+			weights[i] += input[i];
+		}
+	}
+	
+	void modifyBiasBy(double value){
+		bias += value;
+	}
+	
+	/**
+	 * Multiplies each weight by given value.
+	 * @param value
+	 */
+	void multiplyWeightBy(double value){
+		for(int i=0;i<weights.length;i++){
+			weights[i] *= value;
+		}
+	}
+	
+	void multiplyBiasBy(double value){
+		bias *= value;
+	}
+	
+	double[] getWeights() {
+		return weights;
+	}
+	
+	double getBias() {
+		return bias;
+	}
+	
 	private Object readResolve(){
 		function = activationFunction.getFunction();
 		return this;		

@@ -9,4 +9,9 @@ public class LinearActivationFunction implements ActivationFunction {
 		return x;
 	}
 
+	@Override
+	public double getDerivativeValue(double x) {
+		return 1;
+	}
+
 }

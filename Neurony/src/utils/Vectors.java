@@ -17,4 +17,14 @@ public class Vectors {
 		
 		return value;
 	}
+
+	public static double[] multiply(double[] input, double delta) {
+		double []ret = new double[input.length];
+		
+		for(int i=0;i<input.length;i++){
+			ret[i] = input[i] * delta;
+		}
+		
+		return ret;
+	}
 }

@@ -9,4 +9,9 @@ public class SigmoidActivationFunction implements ActivationFunction {
 		return 1.0 / (1 + Math.exp(-x));
 	}
 
+	@Override
+	public double getDerivativeValue(double x) {
+		return (1 - getValue(x)) * getValue(x);
+	}
+
 }
