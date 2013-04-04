@@ -7,6 +7,7 @@ import neurons.Neuron;
 import activationfunction.ActivationFunctions;
 
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 import exceptions.BadVectorDimensionException;
 
@@ -17,10 +18,11 @@ public class NeuronLayer {
 	 * Ancillary variable preserving lastest layer output. Used for error back
 	 * propagation.
 	 */
+	@XStreamOmitField
 	protected double[] output;
 
 	@XStreamImplicit
-	private List<Neuron> neurons;
+	protected List<Neuron> neurons;
 
 	public NeuronLayer(int nrOfNeurons, int nrOfInputPerNeuron,
 			ActivationFunctions activationFunctions) {
@@ -64,5 +66,10 @@ public class NeuronLayer {
 
 	public double[] getOutput() {
 		return output;
+	}
+	
+	private Object readResolve(){
+		output = new double[nrOfNeurons];
+		return this;
 	}
 }

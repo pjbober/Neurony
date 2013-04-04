@@ -85,6 +85,10 @@ public class Neuron {
 	public void setPreviousWeights(double[] previousWeights) {
 		this.previousWeights = previousWeights;
 	}
+	
+	public void setWeights(double[] weights){
+			this.weights = weights;
+	}
 
 	double getBias() {
 		return bias;
@@ -101,6 +105,10 @@ public class Neuron {
 	private Object readResolve() {
 		function = activationFunction.getFunction();
 		return this;
+	}
+
+	public void setBias(double bias) {
+		this.bias = bias;
 	}
 
 }

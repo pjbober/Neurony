@@ -68,13 +68,14 @@ public class GradientDescentTrainer {
 		}
 	}
 
-	private void adjustWeights() {
+	private void adjustWeights() throws BadVectorDimensionException {
 		int layersNumber = network.getLayersNumber();
 		for (int layerIndex = 1; layerIndex < layersNumber; ++layerIndex) {
 			NeuronLayer layer = network.getLayer(layerIndex);
 			NeuronLayer previousLayer = network.getLayer(layerIndex - 1);
 			for (Neuron neuron : layer.getNeurons()) {
 				double[] weights = neuron.getWeights();
+				neuron.modifyBiasBy(learningRate * neuron.getError());
 				for (int weightIndex = 0; weightIndex < weights.length; ++weightIndex) {
 					double weightMomentum;
 					// TODO settings previous weights could be realized inside
@@ -107,8 +108,8 @@ public class GradientDescentTrainer {
 		int epochsCount = 0;
 
 		while (epochsCount < epochs) {
+			answersIterator = answers.iterator();
 			for (double[] input : inputs) {
-				answersIterator = answers.iterator();
 				double[] answer = answersIterator.next();
 				try {
 					propagateError(network.getResponse(input), answer);
