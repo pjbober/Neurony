@@ -1,7 +1,7 @@
 package neurons.layers;
 
-import exceptions.BadVectorDimensionException;
 import activationfunction.ActivationFunctions;
+import exceptions.BadVectorDimensionException;
 
 public class InputNeuronLayer extends NeuronLayer {
 
@@ -13,6 +13,7 @@ public class InputNeuronLayer extends NeuronLayer {
 	@Override
 	public double[] getValues(double... input)
 			throws BadVectorDimensionException {
-		return input;
+		output = input;
+		return output;
 	}
 }

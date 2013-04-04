@@ -11,7 +11,7 @@ public class SigmoidActivationFunction implements ActivationFunction {
 
 	@Override
 	public double getDerivativeValue(double x) {
-		return (1 - getValue(x)) * getValue(x);
+		return Math.exp(x) / Math.pow(Math.exp(x) + 1, 2);
 	}
 
 }

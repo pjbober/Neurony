@@ -3,23 +3,30 @@ package neurons.layers;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.thoughtworks.xstream.annotations.XStreamImplicit;
-
 import neurons.Neuron;
 import activationfunction.ActivationFunctions;
+
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
+
 import exceptions.BadVectorDimensionException;
 
 public class NeuronLayer {
 	private final int nrOfNeurons;
 	private final int nrOfInputPerNeuron;
+	/**
+	 * Ancillary variable preserving lastest layer output. Used for error back
+	 * propagation.
+	 */
+	protected double[] output;
 
 	@XStreamImplicit
-	List<Neuron> neurons;
+	private List<Neuron> neurons;
 
 	public NeuronLayer(int nrOfNeurons, int nrOfInputPerNeuron,
 			ActivationFunctions activationFunctions) {
 		this.nrOfNeurons = nrOfNeurons;
 		this.nrOfInputPerNeuron = nrOfInputPerNeuron;
+		output = new double[nrOfNeurons];
 
 		neurons = new ArrayList<>(nrOfNeurons);
 		for (int i = 0; i < nrOfNeurons; i++) {
@@ -34,13 +41,11 @@ public class NeuronLayer {
 					+ nrOfInputPerNeuron + " values, but got " + input.length);
 		}
 
-		double[] values = new double[nrOfNeurons];
-
 		for (int i = 0; i < nrOfNeurons; i++) {
-			values[i] = neurons.get(i).getValue(input);
+			output[i] = neurons.get(i).getValue(input);
 		}
 
-		return values;
+		return output;
 	}
 
 	public int getNrOfNeurons() {
@@ -51,5 +56,13 @@ public class NeuronLayer {
 	public String toString() {
 		return "Layer of " + nrOfNeurons + " neurons, " + nrOfInputPerNeuron
 				+ " inputs per neuron";
+	}
+
+	public List<Neuron> getNeurons() {
+		return neurons;
+	}
+
+	public double[] getOutput() {
+		return output;
 	}
 }

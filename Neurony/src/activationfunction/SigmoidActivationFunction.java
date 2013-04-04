@@ -7,4 +7,9 @@ public class SigmoidActivationFunction implements ActivationFunction {
 		return 1.0 / (1 + Math.exp(-x));
 	}
 
+	@Override
+	public double getDerivativeValue(double x) {
+		double exp = Math.exp(x);
+		return exp / (Math.pow(exp + 1, 2));
+	}
 }

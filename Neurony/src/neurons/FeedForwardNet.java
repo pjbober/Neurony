@@ -3,17 +3,22 @@ package neurons;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.thoughtworks.xstream.annotations.XStreamImplicit;
-
 import neurons.layers.InputNeuronLayer;
 import neurons.layers.NeuronLayer;
 import neurons.layers.OutputLayerNetwork;
 import activationfunction.ActivationFunctions;
+
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
+
 import exceptions.BadVectorDimensionException;
 
 public class FeedForwardNet {
 	@XStreamImplicit
-	private final List<NeuronLayer> layers;
+	protected final List<NeuronLayer> layers;
+
+	public List<NeuronLayer> getLayers() {
+		return layers;
+	}
 
 	/**
 	 * Creates a new feed forward neural net.
@@ -27,8 +32,8 @@ public class FeedForwardNet {
 	 * @param activationFunctions
 	 *            Type of activation functions in each layer.
 	 */
-	FeedForwardNet(int nrOfInputs, int nrOfOutputs, int nrOfHiddenLayers,
-			List<Integer> neuronsInHiddenLayers,
+	public FeedForwardNet(int nrOfInputs, int nrOfOutputs,
+			int nrOfHiddenLayers, List<Integer> neuronsInHiddenLayers,
 			List<ActivationFunctions> activationFunctions,
 			ActivationFunctions outputActivationFunction) {
 		layers = new ArrayList<>(nrOfHiddenLayers + 2);
@@ -55,5 +60,15 @@ public class FeedForwardNet {
 		}
 
 		return values;
+	}
+
+	/** Facade function for easier access to network layers. */
+	public NeuronLayer getLayer(int i) {
+		return layers.get(i);
+	}
+
+	/** Function for easier check of layers number. */
+	public int getLayersNumber() {
+		return layers.size();
 	}
 }
