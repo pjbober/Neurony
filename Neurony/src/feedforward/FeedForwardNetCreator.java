@@ -1,4 +1,4 @@
-package neurons;
+package feedforward;
 
 import java.util.Arrays;
 

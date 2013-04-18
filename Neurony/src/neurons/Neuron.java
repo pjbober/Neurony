@@ -35,7 +35,7 @@ public class Neuron {
 		return function.getValue(Vectors.multiply(weights, input) + bias);
 	}
 
-	double getDerivtiveValue(double... input)
+	public double getDerivtiveValue(double... input)
 			throws BadVectorDimensionException {
 		return function.getDerivativeValue(Vectors.multiply(weights, input)
 				+ bias);
@@ -55,7 +55,7 @@ public class Neuron {
 		}
 	}
 
-	void modifyBiasBy(double value) {
+	public void modifyBiasBy(double value) {
 		bias += value;
 	}
 
@@ -74,7 +74,7 @@ public class Neuron {
 		bias *= value;
 	}
 
-	double[] getWeights() {
+	public double[] getWeights() {
 		return weights;
 	}
 

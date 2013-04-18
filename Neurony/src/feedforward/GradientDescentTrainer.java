@@ -1,9 +1,10 @@
-package neurons;
+package feedforward;
 
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import neurons.Neuron;
 import neurons.layers.NeuronLayer;
 import exceptions.BadVectorDimensionException;
 
