@@ -1,7 +1,6 @@
 package trainers;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -170,8 +169,7 @@ public class SelfOrganizingMapTrainer {
 	}
 
 	public void train(String filePath) {
-		train(new KohonnenInputIO(network).loadInput(filePath), Calendar
-				.getInstance().getTimeInMillis());
+		train(new KohonnenInputIO(network).loadInput(filePath), System.currentTimeMillis());
 	}
 
 	public void train(String filePath, long seed) {
