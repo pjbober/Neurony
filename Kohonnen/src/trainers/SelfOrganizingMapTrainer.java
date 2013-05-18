@@ -1,11 +1,5 @@
 package trainers;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -18,14 +12,9 @@ import kohonen.KohonenNetwork;
 import kohonen.KohonenNeuron;
 import metric.Metric;
 import metric.impl.EuclideanMetric;
-
-import org.apache.log4j.Logger;
-
 import utils.Utils;
 
 public class SelfOrganizingMapTrainer {
-	private Logger logger = Logger.getLogger(getClass());
-
 	private int allStepsNumber;
 	private double learningRate = 0.5;
 	private KohonenNetwork network;
@@ -40,7 +29,7 @@ public class SelfOrganizingMapTrainer {
 
 	private int currrentStep;
 	private double currentOmega;
-	private double currentDecayRate;
+	double currentDecayRate;
 	private KohonenNeuron currentWinningNeuron;
 
 	private int epochs;
@@ -49,47 +38,17 @@ public class SelfOrganizingMapTrainer {
 	private String normalizedInputOutputFile;
 
 	private double conscienceBeta = 0.5;
-	private double conscienceGamma = 0.75;
+	double conscienceGamma = 0.75;
 
-	private WinningNeuronFinder winningNeuronFinder = new WinningNeuronFinder();
+	private WinningNeuronFinder winningNeuronFinder;
 
 	private Map<KohonenNeuron, List<KohonenNeuron>> neighboursMap = new HashMap<KohonenNeuron, List<KohonenNeuron>>();
 
 	public SelfOrganizingMapTrainer(KohonenNetwork network) {
 		this.network = network;
+		this.winningNeuronFinder = new WinningNeuronFinder(this, metric);
 		for (KohonenNeuron neuron : network.getNeurons()) {
 			neighboursMap.put(neuron, new ArrayList<>(network.getNeurons()));
-		}
-	}
-
-	private class WinningNeuronFinder {
-		double winningNeuronOutput;
-
-		private double calculateNeuronDistance(double[] vector1,
-				double[] vector2) {
-			// double output = Utils.dotProduct(vector1, vector2);
-			double output = metric.getQuasiDistance(vector1, vector2);
-			// normalize
-			// map to bipolar
-			return output;
-		}
-
-		public void findWinningNeuron(double[] input,
-				List<KohonenNeuron> neurons) {
-			winningNeuronOutput = Double.MAX_VALUE;
-			double neuronsNumber = network.getNeuronsNumber();
-			for (KohonenNeuron neuron : neurons) {
-				double distance = calculateNeuronDistance(input,
-						neuron.getWeights());
-				if (isConscienceUsed) {
-					distance += currentDecayRate * conscienceGamma
-							* (neuronsNumber * neuron.getBias() - 1);
-				}
-				if (distance < winningNeuronOutput) {
-					winningNeuronOutput = distance;
-					currentWinningNeuron = neuron;
-				}
-			}
 		}
 	}
 
@@ -164,7 +123,7 @@ public class SelfOrganizingMapTrainer {
 		// logger.info("Network update. Step = " + currrentStep
 		// + ". Learning rate = " + getLearningRate()
 		// + ". Neighbourhood function omega = " + currentOmega);
-		winningNeuronFinder.findWinningNeuron(input, network.getNeurons());
+		winningNeuronFinder.findWinningNeuron(input, network);
 		updateNeuronsWeights(determineWinningNeuronNeighbours(), input);
 	}
 
@@ -189,7 +148,7 @@ public class SelfOrganizingMapTrainer {
 			normalizedInput.add(Utils.normalize(inputElement));
 		}
 		if (normalizedInputOutputFile != null) {
-			new KohonnenImputIO().saveInput(normalizedInputOutputFile,
+			new KohonnenInputIO(network).saveInput(normalizedInputOutputFile,
 					normalizedInput);
 		}
 		Random random = new Random(seed);
@@ -211,60 +170,12 @@ public class SelfOrganizingMapTrainer {
 	}
 
 	public void train(String filePath) {
-		train(new KohonnenImputIO().loadInput(filePath), Calendar.getInstance()
-				.getTimeInMillis());
+		train(new KohonnenInputIO(network).loadInput(filePath), Calendar
+				.getInstance().getTimeInMillis());
 	}
 
 	public void train(String filePath, long seed) {
-		train(new KohonnenImputIO().loadInput(filePath), seed);
-	}
-
-	private class KohonnenImputIO {
-		public void saveInput(String filePath, List<double[]> input) {
-			int inputDImension = network.getNumberOfInputs();
-			try {
-				BufferedWriter bufferedWriter = new BufferedWriter(
-						new FileWriter(new File(filePath)));
-				for (double[] inputElement : input) {
-					StringBuilder stringBuilder = new StringBuilder();
-					int i;
-					for (i = 0; i < inputDImension - 1; ++i) {
-						stringBuilder.append(inputElement[i]).append(" ");
-					}
-					stringBuilder.append(inputElement[i]).append("\n");
-					bufferedWriter.write(stringBuilder.toString());
-				}
-				bufferedWriter.close();
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			}
-		}
-
-		public List<double[]> loadInput(String filePath) {
-			List<double[]> input = new ArrayList<>();
-			int inputDImension = network.getNumberOfInputs();
-			String line;
-			try {
-				BufferedReader bufferedReader = new BufferedReader(
-						new FileReader(new File(filePath)));
-				while ((line = bufferedReader.readLine()) != null) {
-					double[] inputRecord = new double[inputDImension];
-					int i = 0;
-					for (String weight : line.split("\\s")) {
-						try {
-							inputRecord[i++] = Double.parseDouble(weight);
-						} catch (NumberFormatException e) {
-							logger.warn("Imput not recognized");
-						}
-					}
-					input.add(inputRecord);
-				}
-				bufferedReader.close();
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			}
-			return input;
-		}
+		train(new KohonnenInputIO(network).loadInput(filePath), seed);
 	}
 
 	public int getEpochs() {
@@ -325,5 +236,9 @@ public class SelfOrganizingMapTrainer {
 
 	public void setInitialLearningRate(double initialLearningRate) {
 		this.learningRate = initialLearningRate;
+	}
+
+	public void setCurrentWinningNeuron(KohonenNeuron neuron) {
+		this.currentWinningNeuron = neuron;
 	}
 }
