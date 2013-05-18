@@ -1,18 +1,15 @@
-package kohonnen;
+package kohonen;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-public class KohonnenNeuron {
+public class KohonenNeuron {
 	private int id;
 	private double[] weights;
 	private double[] kohonnenCoordinates;
 	private double bias;
 
-	public KohonnenNeuron() {
-	}
-
-	public KohonnenNeuron(double[] weights, double[] kohonnenCoordinates) {
+	public KohonenNeuron(double[] weights, double[] kohonnenCoordinates) {
 		super();
 		this.weights = weights;
 		this.kohonnenCoordinates = kohonnenCoordinates;

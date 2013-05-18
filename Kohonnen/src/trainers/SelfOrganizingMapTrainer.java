@@ -1,4 +1,4 @@
-package treiners;
+package trainers;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import kohonnen.KohonnenNetwork;
-import kohonnen.KohonnenNeuron;
+import kohonen.KohonenNetwork;
+import kohonen.KohonenNeuron;
 import metric.Metric;
 import metric.impl.EuclideanMetric;
 
@@ -23,12 +23,12 @@ import org.apache.log4j.Logger;
 
 import utils.Utils;
 
-public class SelfOrganizingMapTreiner {
+public class SelfOrganizingMapTrainer {
 	private Logger logger = Logger.getLogger(getClass());
 
 	private int allStepsNumber;
 	private double learningRate = 0.5;
-	private KohonnenNetwork network;
+	private KohonenNetwork network;
 	private Metric metric = new EuclideanMetric();
 
 	private boolean isLearningRateDynamic;
@@ -41,7 +41,7 @@ public class SelfOrganizingMapTreiner {
 	private int currrentStep;
 	private double currentOmega;
 	private double currentDecayRate;
-	private KohonnenNeuron currentWinningNeuron;
+	private KohonenNeuron currentWinningNeuron;
 
 	private int epochs;
 	private int currentEpoch;
@@ -53,11 +53,11 @@ public class SelfOrganizingMapTreiner {
 
 	private WinningNeuronFinder winningNeuronFinder = new WinningNeuronFinder();
 
-	private Map<KohonnenNeuron, List<KohonnenNeuron>> neighboursMap = new HashMap<KohonnenNeuron, List<KohonnenNeuron>>();
+	private Map<KohonenNeuron, List<KohonenNeuron>> neighboursMap = new HashMap<KohonenNeuron, List<KohonenNeuron>>();
 
-	public SelfOrganizingMapTreiner(KohonnenNetwork network) {
+	public SelfOrganizingMapTrainer(KohonenNetwork network) {
 		this.network = network;
-		for (KohonnenNeuron neuron : network.getNeurons()) {
+		for (KohonenNeuron neuron : network.getNeurons()) {
 			neighboursMap.put(neuron, new ArrayList<>(network.getNeurons()));
 		}
 	}
@@ -75,10 +75,10 @@ public class SelfOrganizingMapTreiner {
 		}
 
 		public void findWinningNeuron(double[] input,
-				List<KohonnenNeuron> neurons) {
+				List<KohonenNeuron> neurons) {
 			winningNeuronOutput = Double.MAX_VALUE;
 			double neuronsNumber = network.getNeuronsNumber();
-			for (KohonnenNeuron neuron : neurons) {
+			for (KohonenNeuron neuron : neurons) {
 				double distance = calculateNeuronDistance(input,
 						neuron.getWeights());
 				if (isConscienceUsed) {
@@ -93,14 +93,14 @@ public class SelfOrganizingMapTreiner {
 		}
 	}
 
-	private void updateNeuronsWeights(List<KohonnenNeuron> neurons,
+	private void updateNeuronsWeights(List<KohonenNeuron> neurons,
 			double[] input) {
-		for (KohonnenNeuron neuron : neurons) {
+		for (KohonenNeuron neuron : neurons) {
 			adjustNeuronWeights(neuron, input);
 		}
 	}
 
-	private void adjustNeuronWeights(KohonnenNeuron neuron, double[] input) {
+	private void adjustNeuronWeights(KohonenNeuron neuron, double[] input) {
 		double[] weights = neuron.getWeights();
 		double[] updatedWeights = new double[weights.length];
 		for (int i = 0; i < weights.length; ++i) {
@@ -116,7 +116,7 @@ public class SelfOrganizingMapTreiner {
 				* Math.exp(-(double) currrentStep / timeConstant);
 	}
 
-	private double getNeighbourFunctionValue(KohonnenNeuron neuron) {
+	private double getNeighbourFunctionValue(KohonenNeuron neuron) {
 		return Math.exp(-(Math.pow(
 				metric.getDistance(neuron.getWeights(),
 						currentWinningNeuron.getWeights()), 2) / (2 * Math.pow(
@@ -131,11 +131,11 @@ public class SelfOrganizingMapTreiner {
 		}
 	}
 
-	public List<KohonnenNeuron> determineWinningNeuronNeighbours() {
-		List<KohonnenNeuron> possibleNeighbours = neighboursMap
+	public List<KohonenNeuron> determineWinningNeuronNeighbours() {
+		List<KohonenNeuron> possibleNeighbours = neighboursMap
 				.get(currentWinningNeuron);
-		List<KohonnenNeuron> neighbours = new ArrayList<>();
-		for (KohonnenNeuron neuron : possibleNeighbours) {
+		List<KohonenNeuron> neighbours = new ArrayList<>();
+		for (KohonenNeuron neuron : possibleNeighbours) {
 			if (metric.getDistance(neuron.getKohonnenCoordinates(),
 					currentWinningNeuron.getKohonnenCoordinates()) <= currentOmega) {
 				neighbours.add(neuron);
@@ -146,7 +146,7 @@ public class SelfOrganizingMapTreiner {
 	}
 
 	private void updateBiases() {
-		for (KohonnenNeuron neuron : network.getNeurons()) {
+		for (KohonenNeuron neuron : network.getNeurons()) {
 			double bias = neuron.getBias();
 			if (neuron != currentWinningNeuron) {
 				neuron.setBias(bias + conscienceBeta * (1 - bias));
@@ -170,7 +170,7 @@ public class SelfOrganizingMapTreiner {
 
 	private void initializeBiases() {
 		double initialBias = (double) 1 / network.getNeuronsNumber();
-		for (KohonnenNeuron neuron : network.getNeurons()) {
+		for (KohonenNeuron neuron : network.getNeurons()) {
 			neuron.setBias(initialBias);
 		}
 	}
