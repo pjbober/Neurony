@@ -27,4 +27,40 @@ public class Vectors {
 		
 		return ret;
 	}
+	
+	/**
+	 * Liczy cosinus kąta między dwoma wektorami. 
+	 * @param vector1
+	 * @param vector2
+	 * @return
+	 * @throws BadVectorDimensionException 
+	 */
+	public static double getCosine(double[] vector1, double[] vector2) throws BadVectorDimensionException{
+		if(vector1.length != vector2.length){
+			throw new BadVectorDimensionException();
+		}
+		
+		double iloczyn = 0;
+		
+		for(int i=0;i<vector1.length;i++){
+			iloczyn += vector1[i] * vector2[i];
+		}
+		
+		return iloczyn / (length(vector1) * length(vector2));
+	}
+
+	/**
+	 * zwraca długość wektora
+	 * @param vector
+	 * @return
+	 */
+	private static double length(double[] vector) {
+		double suma = 0;
+		
+		for(int i=0;i<vector.length;i++){
+			suma += vector[i] * vector[i];
+		}
+		
+		return Math.sqrt(suma);
+	}
 }

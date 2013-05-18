@@ -1,10 +1,11 @@
-import neurons.FeedForwardNet;
-import neurons.FeedForwardNetCreator;
 import utils.ArraysUtil;
 import activationfunction.ActivationFunctions;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
+
+import feedforward.FeedForwardNet;
+import feedforward.FeedForwardNetCreator;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
