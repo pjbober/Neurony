@@ -222,7 +222,6 @@ public class SelfOrganizingMapTrainer {
 	private class KohonnenImputIO {
 		public void saveInput(String filePath, List<double[]> input) {
 			int inputDImension = network.getNumberOfInputs();
-			String line;
 			try {
 				BufferedWriter bufferedWriter = new BufferedWriter(
 						new FileWriter(new File(filePath)));

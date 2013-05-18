@@ -1,7 +1,6 @@
 package kohonen;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
+import static serializator.Formatters.TWO_PRECISION_ZEROS;
 
 public class KohonenNeuron {
 	private int id;
@@ -53,28 +52,27 @@ public class KohonenNeuron {
 
 	@Override
 	public String toString() {
-		NumberFormat numberFormat = new DecimalFormat("0.00");
 		StringBuilder builder = new StringBuilder();
 
 		builder.append("weights = (");
 		for (int i = 0; i < weights.length - 1; ++i) {
-			builder.append(numberFormat.format(weights[i]));
+			builder.append(TWO_PRECISION_ZEROS.format(weights[i]));
 			builder.append(", ");
 		}
-		builder.append(numberFormat.format(weights[weights.length - 1]));
+		builder.append(TWO_PRECISION_ZEROS.format(weights[weights.length - 1]));
 		builder.append(")");
 
 		builder.append(", KohCoords = (");
 		for (int i = 0; i < kohonnenCoordinates.length - 1; ++i) {
-			builder.append(numberFormat.format(kohonnenCoordinates[i]));
+			builder.append(TWO_PRECISION_ZEROS.format(kohonnenCoordinates[i]));
 			builder.append(", ");
 		}
-		builder.append(numberFormat
+		builder.append(TWO_PRECISION_ZEROS
 				.format(kohonnenCoordinates[weights.length - 1]));
 		builder.append(")");
 
 		builder.append(", bias = ");
-		builder.append(numberFormat.format(bias));
+		builder.append(TWO_PRECISION_ZEROS.format(bias));
 
 		return builder.toString();
 	}
