@@ -1,6 +1,7 @@
-package kohonen;
+package kohonen.kohonen;
 
-import static serializator.Formatters.TWO_PRECISION_ZEROS;
+import static kohonen.serializator.Formatters.TWO_PRECISION_ZEROS;
+
 
 public class KohonenNeuron {
 	private int id;

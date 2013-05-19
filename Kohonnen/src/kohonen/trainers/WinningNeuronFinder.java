@@ -1,8 +1,8 @@
-package trainers;
+package kohonen.trainers;
 
-import kohonen.KohonenNetwork;
-import kohonen.KohonenNeuron;
-import metric.Metric;
+import kohonen.kohonen.KohonenNetwork;
+import kohonen.kohonen.KohonenNeuron;
+import kohonen.metric.Metric;
 
 public class WinningNeuronFinder {
 	private final Metric metric;

@@ -1,6 +1,6 @@
-package metric;
+package kohonen.metric;
 
-import metric.impl.EuclideanMetric;
+import kohonen.metric.impl.EuclideanMetric;
 
 public enum Metrices {
 	EUCLIDEAN(EuclideanMetric.class);

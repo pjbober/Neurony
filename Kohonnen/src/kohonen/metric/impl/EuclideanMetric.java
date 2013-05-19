@@ -1,6 +1,6 @@
-package metric.impl;
+package kohonen.metric.impl;
 
-import metric.Metric;
+import kohonen.metric.Metric;
 
 public class EuclideanMetric extends Metric {
 

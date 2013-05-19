@@ -1,6 +1,6 @@
-package kohonen;
+package kohonen.kohonen;
 
-import static serializator.Formatters.THREE_PRECISION;
+import static kohonen.serializator.Formatters.THREE_PRECISION;
 
 import java.util.ArrayList;
 import java.util.List;

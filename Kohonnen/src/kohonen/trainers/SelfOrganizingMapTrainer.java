@@ -1,4 +1,4 @@
-package trainers;
+package kohonen.trainers;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,17 +7,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import kohonen.KohonenNetwork;
-import kohonen.KohonenNeuron;
-import metric.Metric;
-import metric.impl.EuclideanMetric;
+import kohonen.kohonen.KohonenNetwork;
+import kohonen.kohonen.KohonenNeuron;
+import kohonen.metric.Metric;
+import kohonen.metric.Metrices;
 import utils.Utils;
 
 public class SelfOrganizingMapTrainer {
 	private int allStepsNumber;
 	private double learningRate = 0.5;
 	private KohonenNetwork network;
-	private Metric metric = new EuclideanMetric();
+	private Metric metric = Metrices.EUCLIDEAN.getMetric();
 
 	private boolean isLearningRateDynamic;
 	private boolean isConscienceUsed;

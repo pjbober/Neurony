@@ -1,4 +1,4 @@
-package metric;
+package kohonen.metric;
 
 public abstract class Metric {
 	public abstract double getDistance(double[] x1, double[] x2);

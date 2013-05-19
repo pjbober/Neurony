@@ -1,4 +1,4 @@
-package serializator;
+package kohonen.serializator;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;

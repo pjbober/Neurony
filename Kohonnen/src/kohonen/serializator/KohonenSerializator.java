@@ -1,15 +1,15 @@
-package serializator;
+package kohonen.serializator;
 
-import static serializator.Formatters.THREE_PRECISION;
-import static serializator.Formatters.ZERO_PRECISION;
+import static kohonen.serializator.Formatters.THREE_PRECISION;
+import static kohonen.serializator.Formatters.ZERO_PRECISION;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import kohonen.KohonenNetwork;
-import kohonen.KohonenNeuron;
+import kohonen.kohonen.KohonenNetwork;
+import kohonen.kohonen.KohonenNeuron;
 
 public abstract class KohonenSerializator {
 	public static void saveToFile(String filePath, KohonenNetwork network) {

@@ -1,4 +1,4 @@
-package trainers;
+package kohonen.trainers;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import kohonen.KohonenNetwork;
+import kohonen.kohonen.KohonenNetwork;
 
 import org.apache.log4j.Logger;
 

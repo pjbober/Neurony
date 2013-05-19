@@ -1,10 +1,9 @@
-import kohonen.KohonenNetwork;
+import kohonen.kohonen.KohonenNetwork;
+import kohonen.serializator.KohonenSerializator;
+import kohonen.trainers.SelfOrganizingMapTrainer;
 
 import org.junit.Ignore;
 import org.junit.Test;
-
-import serializator.KohonenSerializator;
-import trainers.SelfOrganizingMapTrainer;
 
 public class MainTest {
 	@Test
